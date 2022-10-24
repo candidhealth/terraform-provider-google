@@ -206,14 +206,15 @@ def download_all_assets_from_github_release():
             f"{config['github_repo_url']}/releases/download/v{config['version']}/{file}"
         )
         print(f"download file... {file}")
-        file_res = requests.get(download_url)
+        file_res = requests.get(download_url, stream=True)
 
         if file_res.status_code != 200:
             raise Exception(f"Error pulling resource: {download_url}")
 
         # Save all files locally
-        with open(file, "w") as f:
-            f.write(file_res.text)
+        with open(file, "wb") as f:
+            for chunk in file_res.iter_content(chunk_size=128):
+                f.write(chunk)
 
 
 def do_full_deploy():
