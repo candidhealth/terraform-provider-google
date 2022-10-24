@@ -1,12 +1,19 @@
 import requests
 import os
 
+def get_env_var(env_key: str):
+    gpg_key_id = os.environ[env_key]
+    if gpg_key_id is None:
+        raise Exception(
+            f"Could not find {env_key} in your environment. Add it and run this action again"
+        )
+    return gpg_key_id
+
 base_provider_file_name = "terraform-provider-google"
 org_name = "candid-health"
 
 config = {
-    "version": "0.0.12",
-    "gpg_key_id": "F6C1116DD083E6BB25EA2011B5BCECC742BCBE69",
+    "version": get_env_var(env_key="REF_NAME"),
     "provider_name": "google",
     "github_repo_url": f"https://github.com/candid-health/{base_provider_file_name}",
     "registry_name": "private",
@@ -14,6 +21,9 @@ config = {
     "org_name": org_name,
     "namespace": org_name,
 }
+
+print('======== VERSION ========')
+print(config['version'])
 
 
 def generate_file_name(version: str, platform: str, arch: str):
@@ -46,17 +56,9 @@ for platform in platforms:
     assets_to_download.append(file_name)
 
 
-def get_auth_token_from_env():
-    auth_token = os.environ["TF_ADMIN_TOKEN"]
-    if auth_token is None:
-        raise Exception(
-            "Could not find TF_ADMIN_TOKEN in your environment. Add it and try again"
-        )
-    return auth_token
-
-
 def get_auth_headers():
-    return {"Authorization": f"Bearer {get_auth_token_from_env()}"}
+    admin_token = get_env_var(env_key="TF_ADMIN_TOKEN")
+    return {"Authorization": f"Bearer {admin_token}"}
 
 
 def get_content_type_headers():
@@ -99,7 +101,7 @@ def create_new_provider_version():
             "type": "registry-provider-versions",
             "attributes": {
                 "version": config["version"],
-                "key-id": config["gpg_key_id"],
+                "key-id": get_env_var(env_key="GPG_KEY_ID"),
                 "protocols": ["5.0"],
             },
         }
