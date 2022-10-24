@@ -10,13 +10,10 @@
 # in `goreleaser` to indicate this is being used in a non-interactive mode.
 #
 
-name: release
+name: release-tf-provider-to-private-registry
 on:
   release:
     types: [published]
-  push:
-    # tags:
-    #   - 'v*'
 permissions:
   contents: write
 jobs:
