@@ -71,9 +71,7 @@ def upload_asset_to_tf_provided_upload_url(file: str, url: str):
     }
     try:
         file_upload_res = requests.put(url, files=files)
-        print('file upload res:')
-        print(file_upload_res)
-        if file_upload_res.status_code is not 200:
+        if file_upload_res.status_code != 200:
             print(file_upload_res.json())
             raise Exception(f"Could not upload file: {file} to url: {url}")
     finally:
@@ -84,7 +82,7 @@ def does_provider_version_exists():
     headers = dict()
     headers.update(get_auth_headers())
     check_for_provider_res = requests.get(url, headers=headers)
-    if check_for_provider_res.status_code is 200:
+    if check_for_provider_res.status_code == 200:
         return True
     else:
         return False
@@ -107,10 +105,7 @@ def create_new_provider_version():
     headers = dict()
     headers.update(get_auth_headers())
     headers.update(get_content_type_headers())
-    print(headers)
-    print(post_params)
     post_res = requests.post(url, headers=headers, json=post_params)
-    print(post_res)
     if post_res.status_code != 201:
         print(post_res.json())
         raise Exception(f"Error creating new version: {url}")
