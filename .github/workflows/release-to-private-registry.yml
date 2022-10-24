@@ -50,7 +50,7 @@ jobs:
           # GitHub sets this automatically
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       -
-        name: deploy-modified-provider:
+        name: deploy-modified-provider
         env:
             GPG_KEY_ID: ${{ steps.import_gpg.outputs.keyid }}
             TF_ADMIN_TOKEN: ${{ secrets.TF_ADMIN_TOKEN }}
