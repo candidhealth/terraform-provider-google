@@ -205,7 +205,7 @@ def create_all_platforms():
 def download_all_assets_from_github_release():
     for file in assets_to_download:
         download_url = (
-            f"{config['github_repo_url']}/releases/download/v{config['version']}/{file}"
+            f"{config['github_repo_url']}/releases/download/{config['version']}/{file}"
         )
         print(f"download file... {file}")
         file_res = requests.get(download_url)
