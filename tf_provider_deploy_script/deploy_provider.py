@@ -15,7 +15,7 @@ org_name = "candid-health"
 config = {
     "version": get_env_var(env_key="REF_NAME"),
     "provider_name": "google",
-    "github_repo_url": f"https://github.com/candid-health/{base_provider_file_name}",
+    "github_repo_url": f"https://github.com/candidhealth/{base_provider_file_name}",
     "registry_name": "private",
     "base_api_url": "https://app.terraform.io/api/v2",
     "org_name": org_name,
