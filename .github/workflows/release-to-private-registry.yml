@@ -55,5 +55,4 @@ jobs:
           GPG_KEY_ID: ${{ steps.import_gpg.outputs.keyid }}
           TF_ADMIN_TOKEN: ${{ secrets.TF_ADMIN_TOKEN }}
           REF_NAME: ${{github.ref_name}}
-        run: echo "test"
-        # run: bash ./tf_provider_deploy_script/deploy_provider.sh
+        run: bash ./tf_provider_deploy_script/deploy_provider.sh
